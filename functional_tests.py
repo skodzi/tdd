@@ -1,12 +1,27 @@
 from selenium import webdriver
+import unittest
 
-browser = webdriver.Firefox()
+class NewVisitorTest(unittest.TestCase):
+    
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.implicity_wait(3)
+        
+    def tearDown(self):
+        self.browser.quit()
+    
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        # Edyta dowiedziala sie o nowej, wspanialej aplikacji w postaci listy rzeczy do zrobienia
+        # Postanowila wiec przejsc na glowna strone tej aplikacji
+        self.browser.get('http://localhost:8000')
 
-# Edyta dowiedziala sie o nowej, wspanialej aplikacji w postaci listy rzeczy do zrobienia
-# Pstanowila wiec przejsc na glowna strone tej aplikacji
-browser.get('http://localhost:8000')
-# zwrocila uwage, ze tytul strony i naglowek zawieraja slowo Listy
-assert 'Listy' in browser.title
+        # zwrocila uwage, ze tytul strony i naglowek zawieraja slowo Listy
+        self.assertIn('Listy', self.browser.title)
+        self.fail('Zakonczenie testu!')
+
+if __name__ == '__main__':
+    unittest.main(warnings='ignore')
+
 # Od razu zostaje zachecona, aby wspisac rzecz do zrobienia
 
 # W polu tekstowym wpisala "Kupic pawie piora " (hobby Edyty
@@ -27,4 +42,3 @@ assert 'Listy' in browser.title
 
 # Usatysfakcjonowania kladzie sie spac
 
-browser.quit
